@@ -40,7 +40,11 @@ public class CompleteBankTest {
     private static void initializeDatabase() throws SQLException {
         System.out.println("\n=== تهيئة قاعدة البيانات / Database Initialization ===");
         
-        Class.forName("org.sqlite.JDBC");
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("SQLite JDBC driver not found", e);
+        }
         Connection conn = DriverManager.getConnection(DB_URL);
         Statement stmt = conn.createStatement();
         
